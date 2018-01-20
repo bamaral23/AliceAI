@@ -1,0 +1,7 @@
+C:\Users\Bernardo\source\repos\AliceAI\AliceAI\bin\Debug\AliceAI.exe.config
+C:\Users\Bernardo\source\repos\AliceAI\AliceAI\bin\Debug\AliceAI.exe
+C:\Users\Bernardo\source\repos\AliceAI\AliceAI\bin\Debug\AliceAI.pdb
+C:\Users\Bernardo\source\repos\AliceAI\AliceAI\obj\Debug\AliceAI.csprojResolveAssemblyReference.cache
+C:\Users\Bernardo\source\repos\AliceAI\AliceAI\obj\Debug\AliceAI.csproj.CoreCompileInputs.cache
+C:\Users\Bernardo\source\repos\AliceAI\AliceAI\obj\Debug\AliceAI.exe
+C:\Users\Bernardo\source\repos\AliceAI\AliceAI\obj\Debug\AliceAI.pdb
