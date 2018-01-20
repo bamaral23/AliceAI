@@ -8,6 +8,7 @@ namespace AliceAI
 {
     class State
     {
+        private Field selectedField;
         public String stateContext {get; }
 
         public State(String initialState)
