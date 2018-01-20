@@ -9,20 +9,45 @@ namespace AliceAI
     class ActionProvider
     {
 
-        public ActionProvider(State GoalState) => this.GoalState = GoalState;
+        public ActionProvider(State GoalState)
+        {
+            this.GoalState = GoalState;
+            register();
+        }
 
-        public State GoalState { get; }
+        private State GoalState { get; }
+
+        private Dictionary<Predicate<State>, Action> availableActions = new Dictionary<Predicate<State>, Action>();
+
 
         public List<Action> selectAvailableAction(State currentState)
         {
             List<Action> availableActions = new List<Action>();
-            if (currentState.getStateContext().Length < this.GoalState.getStateContext().Length)
-            {
-                availableActions.Add(new Action("Add 2", (state) => new State(state.getStateContext() + "2")));
-                availableActions.Add(new Action("Add 3", (state) => new State(state.getStateContext() + "3")));
+
+            foreach (KeyValuePair<Predicate<State>, Action> entry in this.availableActions){
+                if (entry.Key(currentState))
+                {
+                    availableActions.Add(entry.Value);
+                }
             }
             return availableActions;
         }
 
+        private void register()
+        {
+            availableActions.Add(Not(IsStateFull()), new Action("Add 2", (state) => new State(state.getStateContext() + "2")));
+            availableActions.Add(Not(IsStateFull()), new Action("Add 3", (state) => new State(state.getStateContext() + "3")));
+        }
+
+
+        private Predicate<State> IsStateFull()
+        {
+            return currentState => (currentState.getStateContext().Length >= this.GoalState.getStateContext().Length);
+        }
+
+        public static Predicate<State> Not(Predicate<State> predicate)
+        {
+            return x => !predicate(x);
+        }
     }
 }
