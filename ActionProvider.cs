@@ -35,19 +35,35 @@ namespace AliceAI
 
         private void register()
         {
-            availableActions.Add(Not(IsStateFull()), new Action("Add 2", (state) => new State(state.getStateContext() + "2")));
-            availableActions.Add(Not(IsStateFull()), new Action("Add 3", (state) => new State(state.getStateContext() + "3")));
+            availableActions.Add(Not(IsFieldSelected()), new Action("Select Field", (state) => new State(new Field("23"))));
+            availableActions.Add(And(IsFieldSelected(),Not(IsStateFull())), new Action("Add 2", (state) => new State(state.stateContext + "2", state.selectedField)));
+            availableActions.Add(And(IsFieldSelected(), Not(IsStateFull())), new Action("Add 3", (state) => new State(state.stateContext + "3", state.selectedField)));
         }
 
 
+        private Predicate<State> IsFieldSelected()
+        {
+            return currentState => currentState.selectedField != null;
+        }
+
         private Predicate<State> IsStateFull()
         {
-            return currentState => (currentState.getStateContext().Length >= this.GoalState.getStateContext().Length);
+            return currentState => (currentState.stateContext.Length >= this.GoalState.stateContext.Length);
         }
 
         public static Predicate<State> Not(Predicate<State> predicate)
         {
             return x => !predicate(x);
+        }
+
+        public static Predicate<State> And(Predicate<State> predicate1, Predicate<State> predicate2)
+        {
+            return x => predicate1(x) && predicate2(x);
+        }
+
+        public static Predicate<State> Or(Predicate<State> predicate1, Predicate<State> predicate2)
+        {
+            return x => predicate1(x) || predicate2(x);
         }
     }
 }

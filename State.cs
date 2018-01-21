@@ -8,7 +8,7 @@ namespace AliceAI
 {
     class State
     {
-        private Field selectedField;
+        public Field selectedField {get; }
         public String stateContext {get; }
 
         public State(String initialState)
@@ -16,14 +16,22 @@ namespace AliceAI
             this.stateContext = initialState;
         }
 
-        public String getStateContext()
+        public State(Field selectedField)
         {
-            return this.stateContext;
+            this.stateContext = selectedField.ExampleValue;
+            this.selectedField = selectedField;
         }
-        
+
+
+        public State(String context, Field selectedField)
+        {
+            this.stateContext = context;
+            this.selectedField = selectedField;
+        }
+
         public bool Equals(State state)
         {
-            return this.stateContext == state.getStateContext();
+            return this.stateContext == state.stateContext;
         }
     }
 }

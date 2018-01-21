@@ -12,6 +12,12 @@ namespace AliceAI
         private String Id;
         private int Length;
         private FieldFormat FieldFormat;
-        private String ExampleValue;
+        public String ExampleValue { get; }
+
+        public Field(String ExampleValue)
+        {
+            this.ExampleValue = ExampleValue;
+        }
     }
+
 }
