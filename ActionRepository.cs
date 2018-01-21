@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static AliceAI.PredicateUtils;
 
 namespace AliceAI
 {
@@ -15,9 +16,9 @@ namespace AliceAI
         protected override void registerActions(State GoalState)
         {
             {
-                register(PredicateUtils.Not(PredicateUtils.IsFieldSelected()), generateFieldSelectionActions(FieldLoader.loadFields()));
-                register(PredicateUtils.And(PredicateUtils.IsFieldSelected(), PredicateUtils.Not(PredicateUtils.IsStateFull(GoalState))), new Action("Add 2", (state) => new State(state.stateContext + "2", state.selectedField)));
-                register(PredicateUtils.And(PredicateUtils.IsFieldSelected(), PredicateUtils.Not(PredicateUtils.IsStateFull(GoalState))), new Action("Add 3", (state) => new State(state.stateContext + "3", state.selectedField)));
+                register(Not(IsFieldSelected()), generateFieldSelectionActions(FieldLoader.loadFields()));
+                register(And(IsFieldSelected(), Not(IsStateFull(GoalState))), new Action("Add 2", (state) => new State(state.stateContext + "2", state.selectedField)));
+                register(And(IsFieldSelected(), Not(IsStateFull(GoalState))), new Action("Add 3", (state) => new State(state.stateContext + "3", state.selectedField)));
             }
         }
 
