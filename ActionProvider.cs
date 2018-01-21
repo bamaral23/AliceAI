@@ -12,58 +12,55 @@ namespace AliceAI
         public ActionProvider(State GoalState)
         {
             this.GoalState = GoalState;
-            register();
+            registerActions();
         }
 
         private State GoalState { get; }
 
-        private Dictionary<Predicate<State>, Action> availableActions = new Dictionary<Predicate<State>, Action>();
+        private Dictionary<Predicate<State>, List<Action>> availableActions = new Dictionary<Predicate<State>, List<Action>>();
 
 
         public List<Action> selectAvailableAction(State currentState)
         {
             List<Action> availableActions = new List<Action>();
 
-            foreach (KeyValuePair<Predicate<State>, Action> entry in this.availableActions){
+            foreach (KeyValuePair<Predicate<State>, List<Action>> entry in this.availableActions){
                 if (entry.Key(currentState))
                 {
-                    availableActions.Add(entry.Value);
+                    availableActions = availableActions.Union(entry.Value).ToList();
                 }
             }
             return availableActions;
         }
 
-        private void register()
+        private void registerActions()
         {
-            availableActions.Add(Not(IsFieldSelected()), new Action("Select Field", (state) => new State(new Field("23"))));
-            availableActions.Add(And(IsFieldSelected(),Not(IsStateFull())), new Action("Add 2", (state) => new State(state.stateContext + "2", state.selectedField)));
-            availableActions.Add(And(IsFieldSelected(), Not(IsStateFull())), new Action("Add 3", (state) => new State(state.stateContext + "3", state.selectedField)));
+            register(PredicateUtils.Not(PredicateUtils.IsFieldSelected()), generateFieldSelectionActions(FieldLoader.loadFields()));
+            register(PredicateUtils.And(PredicateUtils.IsFieldSelected(), PredicateUtils.Not(PredicateUtils.IsStateFull(GoalState))), new Action("Add 2", (state) => new State(state.stateContext + "2", state.selectedField)));
+            register(PredicateUtils.And(PredicateUtils.IsFieldSelected(), PredicateUtils.Not(PredicateUtils.IsStateFull(GoalState))), new Action("Add 3", (state) => new State(state.stateContext + "3", state.selectedField)));
         }
 
-
-        private Predicate<State> IsFieldSelected()
+        private List<Action> generateFieldSelectionActions(List<Field> fields)
         {
-            return currentState => currentState.selectedField != null;
+            List<Action> generatedActions = new List<Action>();
+            foreach (Field field in fields)
+            {
+                generatedActions.Add(new Action("Select Field", (state) => new State(field)));
+            }
+            return generatedActions;
         }
 
-        private Predicate<State> IsStateFull()
+        private void register(Predicate<State> predicate, Action action)
         {
-            return currentState => (currentState.stateContext.Length >= this.GoalState.stateContext.Length);
+            List<Action> actionList = new List<Action>();
+            actionList.Add(action);
+            this.availableActions.Add(predicate, actionList);
         }
 
-        public static Predicate<State> Not(Predicate<State> predicate)
+        private void register(Predicate<State> predicate, List<Action> action)
         {
-            return x => !predicate(x);
+            this.availableActions.Add(predicate, action);
         }
 
-        public static Predicate<State> And(Predicate<State> predicate1, Predicate<State> predicate2)
-        {
-            return x => predicate1(x) && predicate2(x);
-        }
-
-        public static Predicate<State> Or(Predicate<State> predicate1, Predicate<State> predicate2)
-        {
-            return x => predicate1(x) || predicate2(x);
-        }
     }
 }

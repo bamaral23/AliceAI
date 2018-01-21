@@ -47,6 +47,8 @@
     <Compile Include="Alice.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="FieldLoader.cs" />
+    <Compile Include="PredicateUtils.cs" />
     <Compile Include="State.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
