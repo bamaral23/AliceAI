@@ -12,7 +12,7 @@ namespace AliceAI
         public static List<Field> loadFields()
         {
             List<Field> fields = new List<Field>();
-            fields.Add(new Field("23"));
+            fields.Add(new Field("Example", "23"));
 
             return fields;
         }

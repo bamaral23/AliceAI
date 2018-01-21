@@ -8,14 +8,15 @@ namespace AliceAI
 {
     class Field
     {
-        private String Name;
-        private String Id;
-        private int Length;
-        private FieldFormat FieldFormat;
+        public String Name { get; }
+        public String Id { get; }
+        public int Length { get; }
+        public FieldFormat FieldFormat { get; }
         public String ExampleValue { get; }
 
-        public Field(String ExampleValue)
+        public Field(String name, String ExampleValue)
         {
+            Name = name;
             this.ExampleValue = ExampleValue;
         }
     }

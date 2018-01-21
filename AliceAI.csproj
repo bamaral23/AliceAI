@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="ActionProvider.cs" />
+    <Compile Include="ActionRepository.cs" />
+    <Compile Include="IActionRepository.cs" />
     <Compile Include="Alice.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="Enums.cs" />
