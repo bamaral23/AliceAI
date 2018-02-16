@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AliceAI
+namespace AliceAI.Fields.FieldTypes
 {
     class Field
     {
@@ -12,13 +12,13 @@ namespace AliceAI
         public String Id { get; }
         public int Length { get; }
         public FieldFormat FieldFormat { get; }
-        public String ExampleValue { get; }
-
-        public Field(String name, String ExampleValue)
+        
+        public Field(String name, String Id, int Length, FieldFormat FieldFormat)
         {
             Name = name;
-            this.ExampleValue = ExampleValue;
+            this.Id = Id;
+            this.Length = Length;
+            this.FieldFormat = FieldFormat;
         }
     }
-
 }

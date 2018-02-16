@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace AliceAI
 {
-    enum FieldFormat { Numeric, String, Enum};
+    enum FieldFormat { Numeric, String, Enum, Date};
 }
